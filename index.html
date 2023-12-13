@@ -1,33 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Height Measuring Tool</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
-<body onload="main()">
-    <div class="container">
-        <h1>Height Measuring Tool</h1>
-        <div class="video-container">
-            <video id="myVideo" playsinline autoplay></video>
-        </div>
-        <div class="slider-container">
-            <label for="mySlider">Set Distance:</label>
-            <input id="mySlider" type="range" min="1" max="50" value="20">
-        </div>
-        <div class="button-container">
-            <button id="setStartPoint">Set Starting Point</button>
-            <button id="setEndPoint">Set Ending Point</button>
-        </div>
-        <div id="myLabel"></div>
-        <div id="heightInfo">
-            <p>Height:</p>
-            <p id="heightCm">Height (cm):</p>
-            <p id="heightM">Height (m):</p>
-            <p id="heightFt">Height (ft):</p>
-        </div>
-    </div>
-</body>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <title>Height Measuring Tool</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1>Height Measuring Tool</h1>
+            <p>Welcome to the Height Measuring Tool. Please follow the instructions below to measure the height of an object:</p>
+            <ol>
+                <li>Position your device so the object is within the camera view.</li>
+                <li>Adjust the slider to set the estimated distance to the object.</li>
+                <li>Read the calculated height displayed on the screen.</li>
+            </ol>
+        </header>
+        <main>
+            <video id="myVideo" aria-label="Camera feed"></video>
+            <label for="mySlider">Distance to Object (meters):</label>
+            <input id="mySlider" type="range" min="1" max="50" value="20" aria-label="Distance slider">
+            <div id="myLabel" aria-live="polite"></div>
+            <div id="heightInfo" aria-live="polite"></div>
+        </main>
+    </body>
 </html>

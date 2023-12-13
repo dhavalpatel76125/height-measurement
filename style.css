@@ -1,55 +1,69 @@
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #333;
     background-color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
-h1 {
-    margin: 0 0 20px;
+header {
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-shadow: none;
 }
 
-.video-container {
-    margin-bottom: 20px;
+header h1 {
+    margin: 0 0 10px 0;
 }
 
-.slider-container {
-    margin-bottom: 20px;
+header p {
+    margin-bottom: 15px;
 }
 
-label {
-    font-weight: bold;
-}
-
-.button-container {
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 0 10px;
-    cursor: pointer;
-}
-
-#myLabel {
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-#heightInfo {
+header ol {
     text-align: left;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+main {
+    padding: 20px;
+}
+
+video {
+    max-width: 90%;
+    border: 3px solid #4CAF50;
+    margin-bottom: 20px;
+}
+
+#mySlider {
+    appearance: none;
+    width: 90%;
+    height: 25px;
+    background: #47f;
+    margin-top: 10px;
+}
+
+#mySlider::-webkit-slider-thumb {
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: white;
+}
+
+#myLabel, #heightInfo {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    header ol {
+        text-align: center;
+    }
 }
