@@ -1,14 +1,209 @@
+
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width,user-scalable=no">
-        <title>Height Measuring Tool</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js"></script>
-    </head>
-    <body onload="main()">
-        <input id="mySlider" type="range" min="1" max="50" value="20">
-        <div id="myLabel"></div>
-        <div id="heightInfo"></div>
-        <video id="myVideo"></video>
-    </body>
+
+<head>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta property="og:title" content="Height Measurer">
+	<meta property="og:description" content="Measure height of tall objects.">
+	<meta property="og:image" content="icon.png">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=620 user-scalable=no">
+	<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+	<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
+
+	<style>
+		canvas {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			min-width:100%;
+			min-height:100%;
+			z-index: -1;
+		}
+
+		body {
+			margin: 0;
+			background: #222;
+			text-align: center;
+			overflow: hidden;
+		}
+
+
+		.slider {
+			-webkit-appearance: none;
+			width: 90vw;
+			height: 5vmin;
+			background: #47f;
+			outline: none;
+			margin: 0;
+			margin-top: 8vmin;
+		}
+
+		.slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 5vmin;
+			height: 5vmin;
+			background: white;
+			cursor: pointer;
+		}
+
+		.slider::-moz-range-thumb {
+			width: 5vmin;
+			height: 5vmin;
+			background: white;
+			cursor: pointer;
+		}
+
+		#myLabel {
+			font-family: Arial;
+			font-weight: bold;
+			color: white;
+			font-size: 5vmin;
+			padding: 1vmin;
+
+			text-shadow: 0 0 1vmin #000, 0 0 1vmin #000;
+		}
+	</style>
+	<script>
+
+		let VIDEO = null;
+		let SIZE = 500;
+		let CANVAS;
+		let CONTEXT;
+		
+		let ANGLE = 0;
+
+		var STATE = 0;
+		
+
+		function main() {
+			window.addEventListener("deviceorientation", onOrientationChange);
+			window.addEventListener("click", onClick);
+
+			initializeCamera();
+			animate();
+			onClick();
+			onClick();
+		}
+
+		function onOrientationChange(event) {
+			if (isLandscape()) {
+				ANGLE = 90 - event.gamma;
+				if (event.gamma < 0) {
+					ANGLE = 0;
+				}
+			} else {
+				ANGLE = event.beta - 90;
+				if (ANGLE < 0) {
+					ANGLE = 0;
+				}
+			}
+		}
+
+		function isLandscape() {
+			return (window.orientation == 90 || window.orientation == -90);
+		}
+
+		function onClick() {
+			STATE++;
+			STATE = STATE % 4;
+		}
+
+		function initializeCamera() {
+			var promise = navigator.mediaDevices.getUserMedia(
+				{
+					video: {
+						facingMode: 'environment'
+					}
+				}
+			);
+			promise.then(function (signal) {
+				VIDEO = document.createElement("video");
+				VIDEO.srcObject = signal;
+				VIDEO.play();
+			}).catch(function (err) {
+				alert(err);
+			});
+		}
+
+		function animate() {
+			drawScene();
+			window.requestAnimationFrame(animate);
+		}
+
+		function initializeCanvas(canvasName, width, height) {
+			let canvas = document.getElementById(canvasName);
+			canvas.width = width;
+			canvas.height = height;
+			return canvas;
+		}
+
+		function drawScene(ctx) {
+			if (VIDEO != null && VIDEO.videoWidth != 0) {
+				if(CANVAS==null){
+					CANVAS = initializeCanvas("myCanvas",
+						VIDEO.videoWidth,
+						VIDEO.videoHeight
+					);
+				}
+				
+				
+				CONTEXT = CANVAS.getContext("2d");
+				CONTEXT.drawImage(VIDEO, 0, 0, CANVAS.width, CANVAS.height);
+
+				const ropeLength = document.getElementById("mySlider").value
+				document.getElementById("myLabel").innerHTML = "Distance to tree: " + ropeLength + " meters";
+				const height = Math.tan(ANGLE * Math.PI / 180) * ropeLength;
+
+				const sz = Math.max(CANVAS.width, CANVAS.height);
+				CONTEXT.beginPath();
+				CONTEXT.moveTo(0, CANVAS.height / 2);
+				CONTEXT.lineTo(CANVAS.width, CANVAS.height / 2);
+				CONTEXT.strokeStyle = "white";
+				CONTEXT.lineWidth = sz * 0.007;
+				CONTEXT.shadowBlur = sz * 0.005;
+				CONTEXT.shadowColor = "black";
+				CONTEXT.stroke();
+
+				CONTEXT.font = (sz * 0.05) + "px Arial";
+				CONTEXT.textAlign = "center";
+				CONTEXT.textBaseline = "top";
+				CONTEXT.textBaseline = "bottom";
+				CONTEXT.fillStyle = "white";
+
+				if (STATE % 2 == 0) {
+					CONTEXT.fillText(height.toFixed(1) + " m (" + ANGLE.toFixed(1) + "°)", CANVAS.width / 2, CANVAS.height / 2);
+				} else {
+					CONTEXT.fillText(height.toFixed(1) + " meters", CANVAS.width / 2, CANVAS.height / 2);
+				}
+
+				if (STATE <= 1) {
+					document.getElementById("mySlider").style.display = "none";
+					document.getElementById("myLabel").style.display = "none";
+				} else {
+					document.getElementById("mySlider").style.display = "inline-block";
+					document.getElementById("myLabel").style.display = "inline-block";
+				}
+			} else {
+				// show loading
+			}
+		}
+
+
+
+
+	</script>
+</head>
+
+<body onload="main()">
+	<canvas id="myCanvas"></canvas>
+
+	<input id="mySlider" type="range" min="1" max="50" step="1" value="20" class="slider">
+	<div id="myLabel"></div>
+</body>
+
 </html>
