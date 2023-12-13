@@ -1,69 +1,41 @@
-body {
-    margin: 0;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #f0f0f0;
-    text-align: center;
+body{
+    margin:0;
+    text-align:center;
+    overflow:hidden;
+    font-size:25px;
+    font-family:Arial;
+    color:white;
+    text-shadow:0 0 4px #000, 0 0 4px #000;
 }
 
-header {
-    padding: 20px;
-    background-color: #4CAF50;
-    color: white;
-    text-shadow: none;
+#mySlider{
+    appearance:none;
+    width:90%;
+    height:35px;
+    background:#47f;
+    margin-top:35px;
 }
 
-header h1 {
-    margin: 0 0 10px 0;
+#mySlider::-webkit-slider-thumb{
+    appearance:none;
+    width:35px;
+    height:35px;
+    background:white;
 }
 
-header p {
-    margin-bottom: 15px;
+video{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    z-index:-1;
 }
 
-header ol {
-    text-align: left;
-    display: inline-block;
-    margin: 0 auto;
-}
-
-main {
-    padding: 20px;
-}
-
-video {
-    max-width: 90%;
-    border: 3px solid #4CAF50;
-    margin-bottom: 20px;
-}
-
-#mySlider {
-    appearance: none;
-    width: 90%;
-    height: 25px;
-    background: #47f;
-    margin-top: 10px;
-}
-
-#mySlider::-webkit-slider-thumb {
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: white;
-}
-
-#myLabel, #heightInfo {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-
-@media (max-width: 600px) {
-    body {
-        font-size: 14px;
-    }
-
-    header ol {
-        text-align: center;
-    }
+#heightInfo{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-100%);
+    border-bottom:3px solid white;
+    width:100%;
 }
