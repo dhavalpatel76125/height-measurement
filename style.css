@@ -1,41 +1,55 @@
-body{
-    margin:0;
-    text-align:center;
-    overflow:hidden;
-    font-size:25px;
-    font-family:Arial;
-    color:white;
-    text-shadow:0 0 4px #000, 0 0 4px #000;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-#mySlider{
-    appearance:none;
-    width:90%;
-    height:35px;
-    background:#47f;
-    margin-top:35px;
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
-#mySlider::-webkit-slider-thumb{
-    appearance:none;
-    width:35px;
-    height:35px;
-    background:white;
+h1 {
+    margin: 0 0 20px;
 }
 
-video{
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    z-index:-1;
+.video-container {
+    margin-bottom: 20px;
 }
 
-#heightInfo{
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-100%);
-    border-bottom:3px solid white;
-    width:100%;
+.slider-container {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+#myLabel {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#heightInfo {
+    text-align: left;
 }
